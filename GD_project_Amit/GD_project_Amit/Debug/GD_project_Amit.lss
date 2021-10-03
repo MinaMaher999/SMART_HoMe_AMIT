@@ -1,0 +1,251 @@
+
+GD_project_Amit.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000138  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  0000018c  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  0000018c  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000001bc  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 000000b0  00000000  00000000  000001f8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000820  00000000  00000000  000002a8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000006d3  00000000  00000000  00000ac8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000424  00000000  00000000  0000119b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  0000011c  00000000  00000000  000015c0  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000398  00000000  00000000  000016dc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    000000cb  00000000  00000000  00001a74  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000060  00000000  00000000  00001b3f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   8:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  10:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  14:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  18:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  1c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  20:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  24:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  28:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  2c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  30:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  34:	0c 94 70 00 	jmp	0xe0	; 0xe0 <__vector_13>
+  38:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  3c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  40:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  44:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  48:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  4c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  50:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+  60:	0e 94 39 00 	call	0x72	; 0x72 <main>
+  64:	0c 94 9a 00 	jmp	0x134	; 0x134 <_exit>
+
+00000068 <__bad_interrupt>:
+  68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000006c <SMART_HOME_START>:
+ */ 
+#include"APP_start.h"
+#include"SERVICES.h"
+void SMART_HOME_START(void)
+{
+	SMART_HOME_INITIAL();
+  6c:	0e 94 95 00 	call	0x12a	; 0x12a <SMART_HOME_INITIAL>
+  70:	ff cf       	rjmp	.-2      	; 0x70 <SMART_HOME_START+0x4>
+
+00000072 <main>:
+
+#include "APP_start.h"
+
+
+int main(void)
+{  SMART_HOME_START();//the required application 
+  72:	0e 94 36 00 	call	0x6c	; 0x6c <SMART_HOME_START>
+   
+   
+}
+  76:	80 e0       	ldi	r24, 0x00	; 0
+  78:	90 e0       	ldi	r25, 0x00	; 0
+  7a:	08 95       	ret
+
+0000007c <SPI_Master_initial>:
+ */ 
+#include "SPI.h"
+
+void SPI_Master_initial()
+{
+	CLR_BIT(DDRB,6);//setting MISO input to the master
+  7c:	87 b3       	in	r24, 0x17	; 23
+  7e:	8f 7b       	andi	r24, 0xBF	; 191
+  80:	87 bb       	out	0x17, r24	; 23
+	  
+	
+	SET_BIT(DDRB,5);//setting MOSI output to the master 
+  82:	87 b3       	in	r24, 0x17	; 23
+  84:	80 62       	ori	r24, 0x20	; 32
+  86:	87 bb       	out	0x17, r24	; 23
+	SET_BIT(DDRB,7);//setting SCK output to the master
+  88:	87 b3       	in	r24, 0x17	; 23
+  8a:	80 68       	ori	r24, 0x80	; 128
+  8c:	87 bb       	out	0x17, r24	; 23
+	SET_BIT(DDRB,4);//setting SS output to the master
+  8e:	87 b3       	in	r24, 0x17	; 23
+  90:	80 61       	ori	r24, 0x10	; 16
+  92:	87 bb       	out	0x17, r24	; 23
+	
+		SPCR = (1<<SPE) | (1<<MSTR);//  enable SPI & setting to Master SPI
+  94:	80 e5       	ldi	r24, 0x50	; 80
+  96:	8d b9       	out	0x0d, r24	; 13
+  98:	08 95       	ret
+
+0000009a <SPI_SEND>:
+	
+}
+
+void SPI_SEND(char data)
+{
+	SPDR=data;
+  9a:	8f b9       	out	0x0f, r24	; 15
+	while(!(GET_BIT(SPSR,SPIF))){}
+  9c:	77 9b       	sbis	0x0e, 7	; 14
+  9e:	fe cf       	rjmp	.-4      	; 0x9c <SPI_SEND+0x2>
+  a0:	08 95       	ret
+
+000000a2 <USART_initial>:
+ *  Author: Dell
+ */ 
+#include "USART.h"
+#include "SPI.h"
+void USART_initial()
+{    SET_BIT(SREG,7);// enable global interrupt activated
+  a2:	8f b7       	in	r24, 0x3f	; 63
+  a4:	80 68       	ori	r24, 0x80	; 128
+  a6:	8f bf       	out	0x3f, r24	; 63
+	//using UBR(9600) 
+	UBRRH=0;
+  a8:	10 bc       	out	0x20, r1	; 32
+	UBRRL=103;
+  aa:	87 e6       	ldi	r24, 0x67	; 103
+  ac:	89 b9       	out	0x09, r24	; 9
+	CLR_BIT(UCSRA,U2X);// using normal speed mode activated
+  ae:	8b b1       	in	r24, 0x0b	; 11
+  b0:	8d 7f       	andi	r24, 0xFD	; 253
+  b2:	8b b9       	out	0x0b, r24	; 11
+	CLR_BIT(UCSRA,MPCM);//using single processor activated
+  b4:	8b b1       	in	r24, 0x0b	; 11
+  b6:	8e 7f       	andi	r24, 0xFE	; 254
+  b8:	8b b9       	out	0x0b, r24	; 11
+	
+	UCSRB=0;
+  ba:	1a b8       	out	0x0a, r1	; 10
+	SET_BIT(UCSRB,RXCIE);//Receive complete interrupt enable activated
+  bc:	8a b1       	in	r24, 0x0a	; 10
+  be:	80 68       	ori	r24, 0x80	; 128
+  c0:	8a b9       	out	0x0a, r24	; 10
+	SET_BIT(UCSRB,TXCIE);//Transmit complete interrupt enable activated
+  c2:	8a b1       	in	r24, 0x0a	; 10
+  c4:	80 64       	ori	r24, 0x40	; 64
+  c6:	8a b9       	out	0x0a, r24	; 10
+	SET_BIT(UCSRB,UDRIE);//DARA register empty interrupt enable activated
+  c8:	8a b1       	in	r24, 0x0a	; 10
+  ca:	80 62       	ori	r24, 0x20	; 32
+  cc:	8a b9       	out	0x0a, r24	; 10
+	SET_BIT(UCSRB,RXEN);//Receive enable activated
+  ce:	8a b1       	in	r24, 0x0a	; 10
+  d0:	80 61       	ori	r24, 0x10	; 16
+  d2:	8a b9       	out	0x0a, r24	; 10
+	SET_BIT(UCSRB,TXEN);//Transmit enable activated
+  d4:	8a b1       	in	r24, 0x0a	; 10
+  d6:	88 60       	ori	r24, 0x08	; 8
+  d8:	8a b9       	out	0x0a, r24	; 10
+	
+	UCSRC = (1<< URSEL) | (1<< UCSZ0) | (1<< UCSZ1) ;// using data 8 bits & selecting UCSRC to be used
+  da:	86 e8       	ldi	r24, 0x86	; 134
+  dc:	80 bd       	out	0x20, r24	; 32
+  de:	08 95       	ret
+
+000000e0 <__vector_13>:
+	
+	
+	}
+
+ISR(USART_RXC_vect)// when the USART interrupt come it will send all the data to the slave with SPI 
+{  
+  e0:	1f 92       	push	r1
+  e2:	0f 92       	push	r0
+  e4:	0f b6       	in	r0, 0x3f	; 63
+  e6:	0f 92       	push	r0
+  e8:	11 24       	eor	r1, r1
+  ea:	2f 93       	push	r18
+  ec:	3f 93       	push	r19
+  ee:	4f 93       	push	r20
+  f0:	5f 93       	push	r21
+  f2:	6f 93       	push	r22
+  f4:	7f 93       	push	r23
+  f6:	8f 93       	push	r24
+  f8:	9f 93       	push	r25
+  fa:	af 93       	push	r26
+  fc:	bf 93       	push	r27
+  fe:	ef 93       	push	r30
+ 100:	ff 93       	push	r31
+	  SPI_SEND(UDR);
+ 102:	8c b1       	in	r24, 0x0c	; 12
+ 104:	0e 94 4d 00 	call	0x9a	; 0x9a <SPI_SEND>
+ 108:	ff 91       	pop	r31
+ 10a:	ef 91       	pop	r30
+ 10c:	bf 91       	pop	r27
+ 10e:	af 91       	pop	r26
+ 110:	9f 91       	pop	r25
+ 112:	8f 91       	pop	r24
+ 114:	7f 91       	pop	r23
+ 116:	6f 91       	pop	r22
+ 118:	5f 91       	pop	r21
+ 11a:	4f 91       	pop	r20
+ 11c:	3f 91       	pop	r19
+ 11e:	2f 91       	pop	r18
+ 120:	0f 90       	pop	r0
+ 122:	0f be       	out	0x3f, r0	; 63
+ 124:	0f 90       	pop	r0
+ 126:	1f 90       	pop	r1
+ 128:	18 95       	reti
+
+0000012a <SMART_HOME_INITIAL>:
+ */ 
+#include "SERVICES.h"
+#include "USART.h"
+#include "SPI.h"
+void SMART_HOME_INITIAL(void)
+{   SPI_Master_initial();
+ 12a:	0e 94 3e 00 	call	0x7c	; 0x7c <SPI_Master_initial>
+	USART_initial();
+ 12e:	0e 94 51 00 	call	0xa2	; 0xa2 <USART_initial>
+ 132:	08 95       	ret
+
+00000134 <_exit>:
+ 134:	f8 94       	cli
+
+00000136 <__stop_program>:
+ 136:	ff cf       	rjmp	.-2      	; 0x136 <__stop_program>
