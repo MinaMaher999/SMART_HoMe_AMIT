@@ -1,0 +1,614 @@
+
+Amit_GD_Project_Slave.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000358  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  000003ac  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  000003ac  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000003dc  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 000000f8  00000000  00000000  00000418  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000b80  00000000  00000000  00000510  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000007f0  00000000  00000000  00001090  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000005e9  00000000  00000000  00001880  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000190  00000000  00000000  00001e6c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    0000040d  00000000  00000000  00001ffc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000422  00000000  00000000  00002409  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000098  00000000  00000000  0000282b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   8:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  10:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  14:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  18:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  1c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  20:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  24:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  28:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  2c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  30:	0c 94 57 01 	jmp	0x2ae	; 0x2ae <__vector_12>
+  34:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  38:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  3c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  40:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  44:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  48:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  4c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  50:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+  60:	0e 94 60 00 	call	0xc0	; 0xc0 <main>
+  64:	0c 94 aa 01 	jmp	0x354	; 0x354 <_exit>
+
+00000068 <__bad_interrupt>:
+  68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000006c <SMART_HOME_START>:
+ */ 
+#include"APP_start.h"
+#include"SERVICES.h"
+void SMART_HOME_START(void)
+{
+	SMART_HOME_INITIAL();
+  6c:	0e 94 a5 01 	call	0x34a	; 0x34a <SMART_HOME_INITIAL>
+  70:	ff cf       	rjmp	.-2      	; 0x70 <SMART_HOME_START+0x4>
+
+00000072 <ECU_initial>:
+#include "ECU.h"
+#include "DIO.h"
+
+void ECU_initial()
+{
+	 pin_Direction(PORT_D,3,OUTPUT);// set the Pin D3 to output
+  72:	41 e0       	ldi	r20, 0x01	; 1
+  74:	63 e0       	ldi	r22, 0x03	; 3
+  76:	83 e0       	ldi	r24, 0x03	; 3
+  78:	0e 94 65 00 	call	0xca	; 0xca <pin_Direction>
+	 pin_Direction(PORT_C,2,OUTPUT);// set the Pin C2 to output
+  7c:	41 e0       	ldi	r20, 0x01	; 1
+  7e:	62 e0       	ldi	r22, 0x02	; 2
+  80:	82 e0       	ldi	r24, 0x02	; 2
+  82:	0e 94 65 00 	call	0xca	; 0xca <pin_Direction>
+  86:	08 95       	ret
+
+00000088 <led_1>:
+}
+
+
+void led_1(char  type)
+{
+	switch(type)// 
+  88:	88 23       	and	r24, r24
+  8a:	39 f0       	breq	.+14     	; 0x9a <led_1+0x12>
+  8c:	81 30       	cpi	r24, 0x01	; 1
+  8e:	49 f4       	brne	.+18     	; 0xa2 <led_1+0x1a>
+	{case ON:
+	 set_pin(PORT_D,3);break;//set the pin  D3 to high  
+  90:	63 e0       	ldi	r22, 0x03	; 3
+  92:	83 e0       	ldi	r24, 0x03	; 3
+  94:	0e 94 d6 00 	call	0x1ac	; 0x1ac <set_pin>
+  98:	08 95       	ret
+	 case OFF:
+	 clear_pin(PORT_D,3);break;//clear the pin D3 to low  
+  9a:	63 e0       	ldi	r22, 0x03	; 3
+  9c:	83 e0       	ldi	r24, 0x03	; 3
+  9e:	0e 94 0a 01 	call	0x214	; 0x214 <clear_pin>
+  a2:	08 95       	ret
+
+000000a4 <led_2>:
+	 
+	}
+}
+void led_2(char  type)
+{
+	switch(type)
+  a4:	88 23       	and	r24, r24
+  a6:	39 f0       	breq	.+14     	; 0xb6 <led_2+0x12>
+  a8:	81 30       	cpi	r24, 0x01	; 1
+  aa:	49 f4       	brne	.+18     	; 0xbe <led_2+0x1a>
+	{case ON:
+		set_pin(PORT_C,2);break;//set the pin C2 to high  
+  ac:	62 e0       	ldi	r22, 0x02	; 2
+  ae:	82 e0       	ldi	r24, 0x02	; 2
+  b0:	0e 94 d6 00 	call	0x1ac	; 0x1ac <set_pin>
+  b4:	08 95       	ret
+		case OFF:
+		clear_pin(PORT_C,2);break;//clear the pin C2 to low  
+  b6:	62 e0       	ldi	r22, 0x02	; 2
+  b8:	82 e0       	ldi	r24, 0x02	; 2
+  ba:	0e 94 0a 01 	call	0x214	; 0x214 <clear_pin>
+  be:	08 95       	ret
+
+000000c0 <main>:
+#include "APP_start.h"
+
+
+int main(void)
+{  
+	SMART_HOME_START();//The application required
+  c0:	0e 94 36 00 	call	0x6c	; 0x6c <SMART_HOME_START>
+	
+	
+}
+  c4:	80 e0       	ldi	r24, 0x00	; 0
+  c6:	90 e0       	ldi	r25, 0x00	; 0
+  c8:	08 95       	ret
+
+000000ca <pin_Direction>:
+ * Created: 10/1/2021 11:08:53 PM
+ *  Author: Dell
+ */ 
+#include "DIO.h"
+void pin_Direction(uint8_t PORT,uint8_t PIN,uint8_t DIRECTION)
+{ switch (DIRECTION)// checking whether this Pin is input or output 
+  ca:	44 23       	and	r20, r20
+  cc:	19 f0       	breq	.+6      	; 0xd4 <pin_Direction+0xa>
+  ce:	41 30       	cpi	r20, 0x01	; 1
+  d0:	c9 f1       	breq	.+114    	; 0x144 <pin_Direction+0x7a>
+  d2:	08 95       	ret
+	{
+		case INPUT:
+		switch(PORT) // now in input case we will check at which port we are 
+  d4:	81 30       	cpi	r24, 0x01	; 1
+  d6:	91 f0       	breq	.+36     	; 0xfc <pin_Direction+0x32>
+  d8:	28 f0       	brcs	.+10     	; 0xe4 <pin_Direction+0x1a>
+  da:	82 30       	cpi	r24, 0x02	; 2
+  dc:	d9 f0       	breq	.+54     	; 0x114 <pin_Direction+0x4a>
+  de:	83 30       	cpi	r24, 0x03	; 3
+  e0:	29 f1       	breq	.+74     	; 0x12c <pin_Direction+0x62>
+  e2:	08 95       	ret
+		{
+			case PORT_A:
+			CLR_BIT(DDRA, PIN);// making the Pin given in portA to input
+  e4:	2a b3       	in	r18, 0x1a	; 26
+  e6:	81 e0       	ldi	r24, 0x01	; 1
+  e8:	90 e0       	ldi	r25, 0x00	; 0
+  ea:	02 c0       	rjmp	.+4      	; 0xf0 <pin_Direction+0x26>
+  ec:	88 0f       	add	r24, r24
+  ee:	99 1f       	adc	r25, r25
+  f0:	6a 95       	dec	r22
+  f2:	e2 f7       	brpl	.-8      	; 0xec <pin_Direction+0x22>
+  f4:	80 95       	com	r24
+  f6:	82 23       	and	r24, r18
+  f8:	8a bb       	out	0x1a, r24	; 26
+			
+			
+			break;
+  fa:	08 95       	ret
+			case PORT_B:
+			CLR_BIT(DDRB, PIN);// making the Pin given in portB to input
+  fc:	27 b3       	in	r18, 0x17	; 23
+  fe:	81 e0       	ldi	r24, 0x01	; 1
+ 100:	90 e0       	ldi	r25, 0x00	; 0
+ 102:	02 c0       	rjmp	.+4      	; 0x108 <pin_Direction+0x3e>
+ 104:	88 0f       	add	r24, r24
+ 106:	99 1f       	adc	r25, r25
+ 108:	6a 95       	dec	r22
+ 10a:	e2 f7       	brpl	.-8      	; 0x104 <pin_Direction+0x3a>
+ 10c:	80 95       	com	r24
+ 10e:	82 23       	and	r24, r18
+ 110:	87 bb       	out	0x17, r24	; 23
+			
+			break;
+ 112:	08 95       	ret
+			case PORT_C:
+			CLR_BIT(DDRC, PIN);// making the Pin given in portC to input
+ 114:	24 b3       	in	r18, 0x14	; 20
+ 116:	81 e0       	ldi	r24, 0x01	; 1
+ 118:	90 e0       	ldi	r25, 0x00	; 0
+ 11a:	02 c0       	rjmp	.+4      	; 0x120 <pin_Direction+0x56>
+ 11c:	88 0f       	add	r24, r24
+ 11e:	99 1f       	adc	r25, r25
+ 120:	6a 95       	dec	r22
+ 122:	e2 f7       	brpl	.-8      	; 0x11c <pin_Direction+0x52>
+ 124:	80 95       	com	r24
+ 126:	82 23       	and	r24, r18
+ 128:	84 bb       	out	0x14, r24	; 20
+			
+			break;
+ 12a:	08 95       	ret
+			case PORT_D:
+			CLR_BIT(DDRD,PIN);// making the Pin given in portD to input
+ 12c:	21 b3       	in	r18, 0x11	; 17
+ 12e:	81 e0       	ldi	r24, 0x01	; 1
+ 130:	90 e0       	ldi	r25, 0x00	; 0
+ 132:	02 c0       	rjmp	.+4      	; 0x138 <pin_Direction+0x6e>
+ 134:	88 0f       	add	r24, r24
+ 136:	99 1f       	adc	r25, r25
+ 138:	6a 95       	dec	r22
+ 13a:	e2 f7       	brpl	.-8      	; 0x134 <pin_Direction+0x6a>
+ 13c:	80 95       	com	r24
+ 13e:	82 23       	and	r24, r18
+ 140:	81 bb       	out	0x11, r24	; 17
+			
+			break;
+ 142:	08 95       	ret
+		}
+		break;
+		case OUTPUT:
+		switch(PORT)// now in output case we will check at which port we are 
+ 144:	81 30       	cpi	r24, 0x01	; 1
+ 146:	89 f0       	breq	.+34     	; 0x16a <pin_Direction+0xa0>
+ 148:	28 f0       	brcs	.+10     	; 0x154 <pin_Direction+0x8a>
+ 14a:	82 30       	cpi	r24, 0x02	; 2
+ 14c:	c9 f0       	breq	.+50     	; 0x180 <pin_Direction+0xb6>
+ 14e:	83 30       	cpi	r24, 0x03	; 3
+ 150:	11 f1       	breq	.+68     	; 0x196 <pin_Direction+0xcc>
+ 152:	08 95       	ret
+		{
+			case PORT_A:
+			SET_BIT(DDRA,PIN);// making the Pin given in portA to output
+ 154:	2a b3       	in	r18, 0x1a	; 26
+ 156:	81 e0       	ldi	r24, 0x01	; 1
+ 158:	90 e0       	ldi	r25, 0x00	; 0
+ 15a:	02 c0       	rjmp	.+4      	; 0x160 <pin_Direction+0x96>
+ 15c:	88 0f       	add	r24, r24
+ 15e:	99 1f       	adc	r25, r25
+ 160:	6a 95       	dec	r22
+ 162:	e2 f7       	brpl	.-8      	; 0x15c <pin_Direction+0x92>
+ 164:	82 2b       	or	r24, r18
+ 166:	8a bb       	out	0x1a, r24	; 26
+			break;
+ 168:	08 95       	ret
+			case PORT_B:
+			SET_BIT(DDRB, PIN);// making the Pin given in portB to output
+ 16a:	27 b3       	in	r18, 0x17	; 23
+ 16c:	81 e0       	ldi	r24, 0x01	; 1
+ 16e:	90 e0       	ldi	r25, 0x00	; 0
+ 170:	02 c0       	rjmp	.+4      	; 0x176 <pin_Direction+0xac>
+ 172:	88 0f       	add	r24, r24
+ 174:	99 1f       	adc	r25, r25
+ 176:	6a 95       	dec	r22
+ 178:	e2 f7       	brpl	.-8      	; 0x172 <pin_Direction+0xa8>
+ 17a:	82 2b       	or	r24, r18
+ 17c:	87 bb       	out	0x17, r24	; 23
+			break;
+ 17e:	08 95       	ret
+			case PORT_C:
+			SET_BIT(DDRC, PIN);// making the Pin given in portC to output
+ 180:	24 b3       	in	r18, 0x14	; 20
+ 182:	81 e0       	ldi	r24, 0x01	; 1
+ 184:	90 e0       	ldi	r25, 0x00	; 0
+ 186:	02 c0       	rjmp	.+4      	; 0x18c <pin_Direction+0xc2>
+ 188:	88 0f       	add	r24, r24
+ 18a:	99 1f       	adc	r25, r25
+ 18c:	6a 95       	dec	r22
+ 18e:	e2 f7       	brpl	.-8      	; 0x188 <pin_Direction+0xbe>
+ 190:	82 2b       	or	r24, r18
+ 192:	84 bb       	out	0x14, r24	; 20
+			break;
+ 194:	08 95       	ret
+			case PORT_D:
+			SET_BIT(DDRD, PIN);// making the Pin given in portD to output
+ 196:	21 b3       	in	r18, 0x11	; 17
+ 198:	81 e0       	ldi	r24, 0x01	; 1
+ 19a:	90 e0       	ldi	r25, 0x00	; 0
+ 19c:	02 c0       	rjmp	.+4      	; 0x1a2 <pin_Direction+0xd8>
+ 19e:	88 0f       	add	r24, r24
+ 1a0:	99 1f       	adc	r25, r25
+ 1a2:	6a 95       	dec	r22
+ 1a4:	e2 f7       	brpl	.-8      	; 0x19e <pin_Direction+0xd4>
+ 1a6:	82 2b       	or	r24, r18
+ 1a8:	81 bb       	out	0x11, r24	; 17
+ 1aa:	08 95       	ret
+
+000001ac <set_pin>:
+		break;
+	}
+}
+void set_pin(uint8_t PORT,uint8_t PIN)
+{
+	switch(PORT)  //we will check at which port we are
+ 1ac:	81 30       	cpi	r24, 0x01	; 1
+ 1ae:	89 f0       	breq	.+34     	; 0x1d2 <set_pin+0x26>
+ 1b0:	28 f0       	brcs	.+10     	; 0x1bc <set_pin+0x10>
+ 1b2:	82 30       	cpi	r24, 0x02	; 2
+ 1b4:	c9 f0       	breq	.+50     	; 0x1e8 <set_pin+0x3c>
+ 1b6:	83 30       	cpi	r24, 0x03	; 3
+ 1b8:	11 f1       	breq	.+68     	; 0x1fe <set_pin+0x52>
+ 1ba:	08 95       	ret
+	{
+		case PORT_A:
+		SET_BIT(PORTA,PIN);// setting the pin in PORTA to high
+ 1bc:	2b b3       	in	r18, 0x1b	; 27
+ 1be:	81 e0       	ldi	r24, 0x01	; 1
+ 1c0:	90 e0       	ldi	r25, 0x00	; 0
+ 1c2:	02 c0       	rjmp	.+4      	; 0x1c8 <set_pin+0x1c>
+ 1c4:	88 0f       	add	r24, r24
+ 1c6:	99 1f       	adc	r25, r25
+ 1c8:	6a 95       	dec	r22
+ 1ca:	e2 f7       	brpl	.-8      	; 0x1c4 <set_pin+0x18>
+ 1cc:	82 2b       	or	r24, r18
+ 1ce:	8b bb       	out	0x1b, r24	; 27
+		break;
+ 1d0:	08 95       	ret
+		case PORT_B:
+		SET_BIT(PORTB, PIN);// setting the pin in PORTB to high
+ 1d2:	28 b3       	in	r18, 0x18	; 24
+ 1d4:	81 e0       	ldi	r24, 0x01	; 1
+ 1d6:	90 e0       	ldi	r25, 0x00	; 0
+ 1d8:	02 c0       	rjmp	.+4      	; 0x1de <set_pin+0x32>
+ 1da:	88 0f       	add	r24, r24
+ 1dc:	99 1f       	adc	r25, r25
+ 1de:	6a 95       	dec	r22
+ 1e0:	e2 f7       	brpl	.-8      	; 0x1da <set_pin+0x2e>
+ 1e2:	82 2b       	or	r24, r18
+ 1e4:	88 bb       	out	0x18, r24	; 24
+		break;
+ 1e6:	08 95       	ret
+		case PORT_C:
+		SET_BIT(PORTC, PIN);// setting the pin in PORTC to high
+ 1e8:	25 b3       	in	r18, 0x15	; 21
+ 1ea:	81 e0       	ldi	r24, 0x01	; 1
+ 1ec:	90 e0       	ldi	r25, 0x00	; 0
+ 1ee:	02 c0       	rjmp	.+4      	; 0x1f4 <set_pin+0x48>
+ 1f0:	88 0f       	add	r24, r24
+ 1f2:	99 1f       	adc	r25, r25
+ 1f4:	6a 95       	dec	r22
+ 1f6:	e2 f7       	brpl	.-8      	; 0x1f0 <set_pin+0x44>
+ 1f8:	82 2b       	or	r24, r18
+ 1fa:	85 bb       	out	0x15, r24	; 21
+		break;
+ 1fc:	08 95       	ret
+		case PORT_D:
+		SET_BIT(PORTD, PIN);// setting the pin in PORTD to high
+ 1fe:	22 b3       	in	r18, 0x12	; 18
+ 200:	81 e0       	ldi	r24, 0x01	; 1
+ 202:	90 e0       	ldi	r25, 0x00	; 0
+ 204:	02 c0       	rjmp	.+4      	; 0x20a <set_pin+0x5e>
+ 206:	88 0f       	add	r24, r24
+ 208:	99 1f       	adc	r25, r25
+ 20a:	6a 95       	dec	r22
+ 20c:	e2 f7       	brpl	.-8      	; 0x206 <set_pin+0x5a>
+ 20e:	82 2b       	or	r24, r18
+ 210:	82 bb       	out	0x12, r24	; 18
+ 212:	08 95       	ret
+
+00000214 <clear_pin>:
+		break;
+	}
+}
+void clear_pin(uint8_t PORT,uint8_t PIN)
+{
+	switch(PORT) //we will check at which port we are
+ 214:	81 30       	cpi	r24, 0x01	; 1
+ 216:	91 f0       	breq	.+36     	; 0x23c <clear_pin+0x28>
+ 218:	28 f0       	brcs	.+10     	; 0x224 <clear_pin+0x10>
+ 21a:	82 30       	cpi	r24, 0x02	; 2
+ 21c:	d9 f0       	breq	.+54     	; 0x254 <clear_pin+0x40>
+ 21e:	83 30       	cpi	r24, 0x03	; 3
+ 220:	29 f1       	breq	.+74     	; 0x26c <clear_pin+0x58>
+ 222:	08 95       	ret
+	{
+		case PORT_A:
+		CLR_BIT(PORTA,PIN);// setting the pin in PORTA to low
+ 224:	2b b3       	in	r18, 0x1b	; 27
+ 226:	81 e0       	ldi	r24, 0x01	; 1
+ 228:	90 e0       	ldi	r25, 0x00	; 0
+ 22a:	02 c0       	rjmp	.+4      	; 0x230 <clear_pin+0x1c>
+ 22c:	88 0f       	add	r24, r24
+ 22e:	99 1f       	adc	r25, r25
+ 230:	6a 95       	dec	r22
+ 232:	e2 f7       	brpl	.-8      	; 0x22c <clear_pin+0x18>
+ 234:	80 95       	com	r24
+ 236:	82 23       	and	r24, r18
+ 238:	8b bb       	out	0x1b, r24	; 27
+		break;
+ 23a:	08 95       	ret
+		case PORT_B:
+		CLR_BIT(PORTB, PIN);// setting the pin in PORTB to low
+ 23c:	28 b3       	in	r18, 0x18	; 24
+ 23e:	81 e0       	ldi	r24, 0x01	; 1
+ 240:	90 e0       	ldi	r25, 0x00	; 0
+ 242:	02 c0       	rjmp	.+4      	; 0x248 <clear_pin+0x34>
+ 244:	88 0f       	add	r24, r24
+ 246:	99 1f       	adc	r25, r25
+ 248:	6a 95       	dec	r22
+ 24a:	e2 f7       	brpl	.-8      	; 0x244 <clear_pin+0x30>
+ 24c:	80 95       	com	r24
+ 24e:	82 23       	and	r24, r18
+ 250:	88 bb       	out	0x18, r24	; 24
+		break;
+ 252:	08 95       	ret
+		case PORT_C:
+		CLR_BIT(PORTC, PIN);// setting the pin in PORTC to low
+ 254:	25 b3       	in	r18, 0x15	; 21
+ 256:	81 e0       	ldi	r24, 0x01	; 1
+ 258:	90 e0       	ldi	r25, 0x00	; 0
+ 25a:	02 c0       	rjmp	.+4      	; 0x260 <clear_pin+0x4c>
+ 25c:	88 0f       	add	r24, r24
+ 25e:	99 1f       	adc	r25, r25
+ 260:	6a 95       	dec	r22
+ 262:	e2 f7       	brpl	.-8      	; 0x25c <clear_pin+0x48>
+ 264:	80 95       	com	r24
+ 266:	82 23       	and	r24, r18
+ 268:	85 bb       	out	0x15, r24	; 21
+		break;
+ 26a:	08 95       	ret
+		case PORT_D:
+		CLR_BIT(PORTD, PIN);// setting the pin in PORTD to low
+ 26c:	22 b3       	in	r18, 0x12	; 18
+ 26e:	81 e0       	ldi	r24, 0x01	; 1
+ 270:	90 e0       	ldi	r25, 0x00	; 0
+ 272:	02 c0       	rjmp	.+4      	; 0x278 <clear_pin+0x64>
+ 274:	88 0f       	add	r24, r24
+ 276:	99 1f       	adc	r25, r25
+ 278:	6a 95       	dec	r22
+ 27a:	e2 f7       	brpl	.-8      	; 0x274 <clear_pin+0x60>
+ 27c:	80 95       	com	r24
+ 27e:	82 23       	and	r24, r18
+ 280:	82 bb       	out	0x12, r24	; 18
+ 282:	08 95       	ret
+
+00000284 <SPI_SLave_initial>:
+#include "SPI.h"
+#include "ECU.h"
+
+void SPI_SLave_initial()
+{
+	SET_BIT(DDRB,6);//setting MISO output to the slave
+ 284:	87 b3       	in	r24, 0x17	; 23
+ 286:	80 64       	ori	r24, 0x40	; 64
+ 288:	87 bb       	out	0x17, r24	; 23
+	
+	
+	CLR_BIT(DDRB,5);//setting MOSI input to the slave
+ 28a:	87 b3       	in	r24, 0x17	; 23
+ 28c:	8f 7d       	andi	r24, 0xDF	; 223
+ 28e:	87 bb       	out	0x17, r24	; 23
+	CLR_BIT(DDRB,7);//setting SCK input to the slave
+ 290:	87 b3       	in	r24, 0x17	; 23
+ 292:	8f 77       	andi	r24, 0x7F	; 127
+ 294:	87 bb       	out	0x17, r24	; 23
+	CLR_BIT(DDRB,4);//setting SS input to the slave
+ 296:	87 b3       	in	r24, 0x17	; 23
+ 298:	8f 7e       	andi	r24, 0xEF	; 239
+ 29a:	87 bb       	out	0x17, r24	; 23
+
+	CLR_BIT(SPCR,4);//setting to SLAVE SPI
+ 29c:	8d b1       	in	r24, 0x0d	; 13
+ 29e:	8f 7e       	andi	r24, 0xEF	; 239
+ 2a0:	8d b9       	out	0x0d, r24	; 13
+	SPCR = (1<<SPE) | (1<<SPIE);//  enable SPI & setting to SLAVE Interrupt
+ 2a2:	80 ec       	ldi	r24, 0xC0	; 192
+ 2a4:	8d b9       	out	0x0d, r24	; 13
+	 SET_BIT(SREG,7);// enable global interrupt activated
+ 2a6:	8f b7       	in	r24, 0x3f	; 63
+ 2a8:	80 68       	ori	r24, 0x80	; 128
+ 2aa:	8f bf       	out	0x3f, r24	; 63
+ 2ac:	08 95       	ret
+
+000002ae <__vector_12>:
+}
+ISR(SPI_STC_vect)//what will happen when the interrupt flag is high 
+{
+ 2ae:	1f 92       	push	r1
+ 2b0:	0f 92       	push	r0
+ 2b2:	0f b6       	in	r0, 0x3f	; 63
+ 2b4:	0f 92       	push	r0
+ 2b6:	11 24       	eor	r1, r1
+ 2b8:	2f 93       	push	r18
+ 2ba:	3f 93       	push	r19
+ 2bc:	4f 93       	push	r20
+ 2be:	5f 93       	push	r21
+ 2c0:	6f 93       	push	r22
+ 2c2:	7f 93       	push	r23
+ 2c4:	8f 93       	push	r24
+ 2c6:	9f 93       	push	r25
+ 2c8:	af 93       	push	r26
+ 2ca:	bf 93       	push	r27
+ 2cc:	ef 93       	push	r30
+ 2ce:	ff 93       	push	r31
+	char data= SPDR;
+ 2d0:	8f b1       	in	r24, 0x0f	; 15
+	switch(data)
+ 2d2:	82 33       	cpi	r24, 0x32	; 50
+ 2d4:	a1 f0       	breq	.+40     	; 0x2fe <__vector_12+0x50>
+ 2d6:	28 f4       	brcc	.+10     	; 0x2e2 <__vector_12+0x34>
+ 2d8:	80 33       	cpi	r24, 0x30	; 48
+ 2da:	49 f0       	breq	.+18     	; 0x2ee <__vector_12+0x40>
+ 2dc:	81 33       	cpi	r24, 0x31	; 49
+ 2de:	59 f0       	breq	.+22     	; 0x2f6 <__vector_12+0x48>
+ 2e0:	23 c0       	rjmp	.+70     	; 0x328 <__vector_12+0x7a>
+ 2e2:	84 33       	cpi	r24, 0x34	; 52
+ 2e4:	d1 f0       	breq	.+52     	; 0x31a <__vector_12+0x6c>
+ 2e6:	90 f0       	brcs	.+36     	; 0x30c <__vector_12+0x5e>
+ 2e8:	85 33       	cpi	r24, 0x35	; 53
+ 2ea:	d9 f0       	breq	.+54     	; 0x322 <__vector_12+0x74>
+ 2ec:	1d c0       	rjmp	.+58     	; 0x328 <__vector_12+0x7a>
+	{case '0'://data =0 led 1 on
+	led_1(ON);break;
+ 2ee:	81 e0       	ldi	r24, 0x01	; 1
+ 2f0:	0e 94 44 00 	call	0x88	; 0x88 <led_1>
+ 2f4:	19 c0       	rjmp	.+50     	; 0x328 <__vector_12+0x7a>
+	case '1'://data =1 led 2 on
+	led_2(ON);break;
+ 2f6:	81 e0       	ldi	r24, 0x01	; 1
+ 2f8:	0e 94 52 00 	call	0xa4	; 0xa4 <led_2>
+ 2fc:	15 c0       	rjmp	.+42     	; 0x328 <__vector_12+0x7a>
+	case '2'://data =2 led 1 &2 on
+	led_1(ON);led_2(ON);break;
+ 2fe:	81 e0       	ldi	r24, 0x01	; 1
+ 300:	0e 94 44 00 	call	0x88	; 0x88 <led_1>
+ 304:	81 e0       	ldi	r24, 0x01	; 1
+ 306:	0e 94 52 00 	call	0xa4	; 0xa4 <led_2>
+ 30a:	0e c0       	rjmp	.+28     	; 0x328 <__vector_12+0x7a>
+	case '3' : //data =3 led 1&2 off
+	led_1(OFF);led_2(OFF);break;
+ 30c:	80 e0       	ldi	r24, 0x00	; 0
+ 30e:	0e 94 44 00 	call	0x88	; 0x88 <led_1>
+ 312:	80 e0       	ldi	r24, 0x00	; 0
+ 314:	0e 94 52 00 	call	0xa4	; 0xa4 <led_2>
+ 318:	07 c0       	rjmp	.+14     	; 0x328 <__vector_12+0x7a>
+	case '4' ://data =4 led 1 off
+	led_1(OFF);break;
+ 31a:	80 e0       	ldi	r24, 0x00	; 0
+ 31c:	0e 94 44 00 	call	0x88	; 0x88 <led_1>
+ 320:	03 c0       	rjmp	.+6      	; 0x328 <__vector_12+0x7a>
+	case '5' ://data =5 led 2 off
+	led_2(OFF);break;
+ 322:	80 e0       	ldi	r24, 0x00	; 0
+ 324:	0e 94 52 00 	call	0xa4	; 0xa4 <led_2>
+	}
+		
+		
+		
+	}
+ 328:	ff 91       	pop	r31
+ 32a:	ef 91       	pop	r30
+ 32c:	bf 91       	pop	r27
+ 32e:	af 91       	pop	r26
+ 330:	9f 91       	pop	r25
+ 332:	8f 91       	pop	r24
+ 334:	7f 91       	pop	r23
+ 336:	6f 91       	pop	r22
+ 338:	5f 91       	pop	r21
+ 33a:	4f 91       	pop	r20
+ 33c:	3f 91       	pop	r19
+ 33e:	2f 91       	pop	r18
+ 340:	0f 90       	pop	r0
+ 342:	0f be       	out	0x3f, r0	; 63
+ 344:	0f 90       	pop	r0
+ 346:	1f 90       	pop	r1
+ 348:	18 95       	reti
+
+0000034a <SMART_HOME_INITIAL>:
+#include "SERVICES.h"
+#include"ECU.h"
+
+#include "SPI.h"
+void SMART_HOME_INITIAL(void)
+{    ECU_initial();
+ 34a:	0e 94 39 00 	call	0x72	; 0x72 <ECU_initial>
+	 SPI_SLave_initial();
+ 34e:	0e 94 42 01 	call	0x284	; 0x284 <SPI_SLave_initial>
+ 352:	08 95       	ret
+
+00000354 <_exit>:
+ 354:	f8 94       	cli
+
+00000356 <__stop_program>:
+ 356:	ff cf       	rjmp	.-2      	; 0x356 <__stop_program>
